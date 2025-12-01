@@ -1,28 +1,39 @@
-import { Controller, Get, Post, Patch, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
+  // Handle /users (all users)
+  // Optional query params: /users?name=John&age=25
   @Get()
-  public getUsers() {
-    return 'You sent a GET request to /users endpoint';
+  public getAllUsers(@Query('name') name?: string, @Query('age') age?: string) {
+    console.log('Getting all users', { name, age });
+    return {
+      message: 'You sent a GET request to /users endpoint (all users)',
+      queryParams: { name: name || 'not provided', age: age || 'not provided' },
+    };
+  }
+
+  // Handle /users/:id (specific user)
+  // Optional query params: /users/123?include=profile&format=json
+  @Get(':id')
+  public getUser(
+    @Param('id') id: string,
+    @Query('include') include?: string,
+    @Query('format') format?: string,
+  ) {
+    console.log(id, { include, format });
+    return {
+      message: `You sent a GET request to /users/${id}`,
+      queryParams: {
+        include: include || 'not provided',
+        format: format || 'not provided',
+      },
+    };
   }
 
   @Post()
-  public postUsers() {
+  public createUser(@Body() request: any) {
+    console.log(request);
     return 'You sent a POST request to /users endpoint';
-  }
-  @Patch()
-  public patchUsers() {
-    return 'You sent a PATCH request to /users endpoint';
-  }
-
-  @Put()
-  public putUsers() {
-    return 'You sent a PUT request to /users endpoint';
-  }
-
-  @Delete()
-  public deleteUsers() {
-    return 'You sent a DELETE request to /users endpoint';
   }
 }

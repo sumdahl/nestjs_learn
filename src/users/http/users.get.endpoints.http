@@ -1,1 +1,6 @@
 GET http://localhost:3000/users
+GET http://localhost:3000/users?name=John
+GET http://localhost:3000/users?name=John&age=25
+GET http://localhost:3000/users/123
+GET http://localhost:3000/users/123?include=profile
+GET http://localhost:3000/users/123?include=profile&format=json
