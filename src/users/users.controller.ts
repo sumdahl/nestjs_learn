@@ -7,6 +7,8 @@ import {
   Body,
   Headers,
   Ip,
+  ParseIntPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -24,18 +26,19 @@ export class UsersController {
 
   // Handle /users/:id (specific user)
   // Optional query params: /users/123?include=profile&format=json
-  @Get(':id')
+  @Get('/:id')
   public getUser(
-    @Param('id') id: string,
-    @Query('include') include?: string,
-    @Query('format') format?: string,
+    @Param('id', ParseIntPipe) id: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    console.log(id, { include, format });
+    console.log(limit);
+    console.log(page);
     return {
       message: `You sent a GET request to /users/${id}`,
       queryParams: {
-        include: include || 'not provided',
-        format: format || 'not provided',
+        limit: limit || 'not provided',
+        page: page || 'not provided',
       },
     };
   }
