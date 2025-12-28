@@ -1,6 +1,7 @@
-GET http://localhost:3000/users/1234
-?limit=20
-&page=2
+GET http://localhost:3000
+/users/11
+?limit=3
+&page=30
 
 # GET http://localhost:3000/users?name=John
 # GET http://localhost:3000/users?name=John&age=25

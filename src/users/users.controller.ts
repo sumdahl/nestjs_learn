@@ -32,8 +32,9 @@ export class UsersController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    console.log(limit);
-    console.log(page);
+    console.log('ID: \n', id);
+    console.log('Limit: \n', limit);
+    console.log('Page: \n', page);
     return {
       message: `You sent a GET request to /users/${id}`,
       queryParams: {
